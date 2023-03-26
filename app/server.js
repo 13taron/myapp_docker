@@ -4,8 +4,16 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const app = express();
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+})
+
 app.use(bodyParser.urlencoded({
-  extended: true
+ 
+ extended: true
 }));
 app.use(bodyParser.json());
 
@@ -33,11 +41,6 @@ db.connect((err) => {
 });
 
 app.post('/update-profile', function (req, res) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Max-Age', 86400);
   res.sendFile(path.join(__dirname, "images/profile-1.jpg"));
   let userObj = req.body;
 
@@ -53,12 +56,6 @@ app.post('/update-profile', function (req, res) {
 });
 
 app.get('/get-profile', function (req, res) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Max-Age', 86400);
-
   let response = {};
   let sql = `SELECT * FROM users_`;
 
@@ -72,11 +69,6 @@ app.get('/get-profile', function (req, res) {
 });
 
 app.get('/get-info', function (req, res) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Max-Age', 86400);
   let response = {};
   let sql = `SELECT * FROM users_`;
 
